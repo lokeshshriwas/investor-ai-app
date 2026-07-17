@@ -1,0 +1,14 @@
+{
+  "symbol": "IEX.NS",
+  "name": "Indian Energy Exchange Limited",
+  "current_price": 122.8,
+  "market_cap": 109206077440,
+  "sector": "Financial Services",
+  "pe_ratio": 22.166065,
+  "peg_ratio": null,
+  "roe": 0.39419997,
+  "debt_to_equity": 0.818,
+  "profit_margin": 0.65990996,
+  "revenue_growth": 0.125,
+  "_fetched_at": "2026-07-17T18:50:27.732264+00:00"
+}

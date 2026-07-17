@@ -1,0 +1,14 @@
+{
+  "symbol": "POWERGRID.NS",
+  "name": "Power Grid Corporation of India Limited",
+  "current_price": 283.55,
+  "market_cap": 2637186203648,
+  "sector": "Utilities",
+  "pe_ratio": 14.106964,
+  "peg_ratio": null,
+  "roe": 0.16492,
+  "debt_to_equity": 150.993,
+  "profit_margin": 0.34083,
+  "revenue_growth": -0.05,
+  "_fetched_at": "2026-07-17T18:49:55.821405+00:00"
+}

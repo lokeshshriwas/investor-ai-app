@@ -1,0 +1,14 @@
+{
+  "symbol": "BSE.NS",
+  "name": "BSE Limited",
+  "current_price": 3581.8,
+  "market_cap": 1454673231872,
+  "sector": "Financial Services",
+  "pe_ratio": 59.271885,
+  "peg_ratio": null,
+  "roe": 0.36003,
+  "debt_to_equity": 0.0,
+  "profit_margin": 0.48729,
+  "revenue_growth": 1.051,
+  "_fetched_at": "2026-07-17T18:51:24.515001+00:00"
+}

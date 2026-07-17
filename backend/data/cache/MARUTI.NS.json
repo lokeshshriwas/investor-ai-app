@@ -1,0 +1,14 @@
+{
+  "symbol": "MARUTI.NS",
+  "name": "Maruti Suzuki India Limited",
+  "current_price": 13803.0,
+  "market_cap": 4339698499584,
+  "sector": "Consumer Cyclical",
+  "pe_ratio": 29.541563,
+  "peg_ratio": 0.77,
+  "roe": 0.14434,
+  "debt_to_equity": 0.096,
+  "profit_margin": 0.08008,
+  "revenue_growth": 0.282,
+  "_fetched_at": "2026-07-17T18:56:38.919341+00:00"
+}

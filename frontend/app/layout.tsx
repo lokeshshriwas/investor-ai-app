@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
+import GlobalFooter from "@/components/GlobalFooter";
+import AuthGuard from "@/components/AuthGuard";
 
 export const metadata: Metadata = {
-  title: "Investor AI — Nifty 50 Advisory",
+  title: "Investor AI - Nifty 50 Advisory",
   description:
     "AI-powered investment advisory for Indian equities. Screen Nifty 50 stocks by fundamentals and get AI-driven insights.",
 };
@@ -21,8 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased">{children}</body>
+    <html lang="en" className="h-full">
+      <body className="min-h-full flex flex-col antialiased">
+        <AuthGuard>
+          <main className="flex-1">{children}</main>
+          <GlobalFooter />
+        </AuthGuard>
+      </body>
     </html>
   );
 }

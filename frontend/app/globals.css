@@ -4,99 +4,98 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── Design Tokens — Investor AI ─────────────────────────────────────────── */
+/* ─── Design Tokens - Investor AI (Dark Mode) ──────────────────────────────── */
 :root {
   /* Background & Surfaces */
-  --bg: #FAFAF8;
-  --surface: #FFFFFF;
+  --bg: #1A1918;
+  /* warm near-black */
+  --surface: #232220;
+  /* card/panel - one step lighter */
+  --surface-hover: #2C2B28;
+  /* hover state for cards */
 
   /* Typography */
-  --text-primary: #1A1A18;
-  --text-secondary: #6B6B65;
+  --text-primary: #F2F0EB;
+  /* warm off-white - ~15:1 contrast on --bg */
+  --text-secondary: #A8A59D;
+  /* muted - ~7:1 contrast on --bg */
 
-  /* Borders & Structure */
-  --border: #E8E6E1;
+  /* Borders */
+  --border: #3A3835;
+  /* hairline borders */
   --radius: 10px;
 
-  /* Brand Accent */
-  --accent: #C15F3C;
+  /* Brand Accent - terracotta, used sparingly */
+  --accent: #D97757;
+  --accent-hover: #C56847;
   --accent-foreground: #FFFFFF;
 
-  /* Semantic Colors */
-  --positive: #3D7A5C;
-  --negative: #B0483D;
+  /* Semantic */
+  --positive: #6FA98A;
+  /* desaturated green */
+  --negative: #C77A6E;
+  /* desaturated red/rust */
 
-  /* shadcn compatibility overrides */
-  --background: #FAFAF8;
-  --foreground: #1A1A18;
+  /* ── shadcn/Radix compatibility ──────────────────────────────────────────── */
+  --background: #1A1918;
+  --foreground: #F2F0EB;
 
-  --card: oklch(1 0 0);
+  --card: #232220;
+  --card-foreground: #F2F0EB;
 
-  --card-foreground: oklch(0.145 0 0);
+  --popover: #2C2B28;
+  --popover-foreground: #F2F0EB;
 
-  --popover: oklch(1 0 0);
+  --primary: #D97757;
+  --primary-foreground: #FFFFFF;
 
-  --popover-foreground: oklch(0.145 0 0);
+  --secondary: #2C2B28;
+  --secondary-foreground: #F2F0EB;
 
-  --primary: oklch(0.205 0 0);
+  --muted: #2C2B28;
+  --muted-foreground: #A8A59D;
 
-  --primary-foreground: oklch(0.985 0 0);
+  --accent: #D97757;
+  --accent-foreground: #FFFFFF;
 
-  --secondary: oklch(0.97 0 0);
+  --destructive: #C77A6E;
+  --destructive-foreground: #FFFFFF;
 
-  --secondary-foreground: oklch(0.205 0 0);
+  --border: #3A3835;
+  --input: #2C2B28;
+  --ring: #D97757;
 
-  --muted: oklch(0.97 0 0);
+  /* Charts - warm dark grays */
+  --chart-1: #D97757;
+  --chart-2: #6FA98A;
+  --chart-3: #A8A59D;
+  --chart-4: #C77A6E;
+  --chart-5: #3A3835;
 
-  --muted-foreground: oklch(0.556 0 0);
-
-  --accent-foreground: oklch(0.205 0 0);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --input: oklch(0.922 0 0);
-
-  --ring: oklch(0.708 0 0);
-
-  --chart-1: oklch(0.87 0 0);
-
-  --chart-2: oklch(0.556 0 0);
-
-  --chart-3: oklch(0.439 0 0);
-
-  --chart-4: oklch(0.371 0 0);
-
-  --chart-5: oklch(0.269 0 0);
-
-  --sidebar: oklch(0.985 0 0);
-
-  --sidebar-foreground: oklch(0.145 0 0);
-
-  --sidebar-primary: oklch(0.205 0 0);
-
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-
-  --sidebar-accent: oklch(0.97 0 0);
-
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-
-  --sidebar-border: oklch(0.922 0 0);
-
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Sidebar */
+  --sidebar: #232220;
+  --sidebar-foreground: #F2F0EB;
+  --sidebar-primary: #D97757;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #2C2B28;
+  --sidebar-accent-foreground: #F2F0EB;
+  --sidebar-border: #3A3835;
+  --sidebar-ring: #D97757;
 }
 
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--text-primary);
   --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-positive: var(--positive);
   --color-negative: var(--negative);
   --color-text-secondary: var(--text-secondary);
   --radius: var(--radius);
-  --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -124,6 +123,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -133,34 +133,41 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ─── Base Styles ──────────────────────────────────────────────────────────── */
+/* ─── Base ──────────────────────────────────────────────────────────────────── */
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text-primary);
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
   font-weight: 400;
 }
 
-/* ─── Typography Scale ─────────────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
+/* ─── Typography ────────────────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   line-height: 1.25;
   color: var(--text-primary);
 }
 
-p, span, li {
+p,
+span,
+li {
   color: var(--text-primary);
 }
 
-/* ─── Utility helpers ──────────────────────────────────────────────────────── */
+/* ─── Utilities ─────────────────────────────────────────────────────────────── */
 .text-muted {
   color: var(--text-secondary);
 }
@@ -169,6 +176,10 @@ p, span, li {
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+}
+
+.surface-hover:hover {
+  background-color: var(--surface-hover);
 }
 
 .accent {
@@ -183,47 +194,52 @@ p, span, li {
   color: var(--negative);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* ─── Form elements ─────────────────────────────────────────────────────────── */
+input,
+textarea,
+select {
+  background-color: var(--input);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.15);
+}
+
+/* ─── Scrollbar (dark themed) ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+}
+
+/* ─── Tailwind base layer ───────────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }

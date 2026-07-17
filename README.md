@@ -5,7 +5,7 @@ An AI-powered investment advisory app for Indian equities (Nifty 50), built for 
 ## What it does
 
 - **Stock Screener** (Phase 2): Filter Nifty 50 stocks by PE, ROE, debt-to-equity, and other fundamentals
-- **AI Chat Advisor** (Phase 3): Ask natural-language questions about any screened stock — powered by Groq (LLaMA) or Gemini
+- **AI Chat Advisor** (Phase 3): Ask natural-language questions about any screened stock - powered by Groq (LLaMA) or Gemini
 - **Offline-first data**: All 50 Nifty 50 tickers cached as JSON from Yahoo Finance so the demo works without live API calls
 
 ---
@@ -16,7 +16,7 @@ An AI-powered investment advisory app for Indian equities (Nifty 50), built for 
 investor-ai/
 ├── frontend/           # Next.js 14 (App Router, TypeScript, Tailwind, shadcn)
 ├── backend/
-│   ├── main.py         # FastAPI app — start here
+│   ├── main.py         # FastAPI app - start here
 │   ├── services/
 │   │   └── data_fetcher.py   # yfinance cache layer
 │   ├── data/
@@ -36,7 +36,7 @@ investor-ai/
 ```bash
 cd backend
 
-# First time only — create virtualenv and install deps
+# First time only - create virtualenv and install deps
 python -m venv venv
 .\venv\Scripts\activate          # Windows
 # source venv/bin/activate       # Mac/Linux
@@ -78,7 +78,7 @@ python -m services.data_fetcher
 
 ## Manual Setup Checklist
 
-> **These steps require external accounts — the agent cannot do them for you.**
+> **These steps require external accounts - the agent cannot do them for you.**
 
 - [ ] **Supabase**: Create a project at [supabase.com](https://supabase.com).
   Copy `Project URL` and `service_role` key → paste into `backend/.env`.
@@ -95,7 +95,7 @@ python -m services.data_fetcher
   Copy the key → paste as `ALPHA_VANTAGE_API_KEY` in `backend/.env`.
 
 - [ ] **Verify Nifty 50 list**: The file `backend/data/nifty50.json` was generated
-  from training data and **may not reflect the latest index composition** — NSE
+  from training data and **may not reflect the latest index composition** - NSE
   updates the Nifty 50 periodically. Please verify against the [official NSE page](https://www.nseindia.com/products-services/indices-nifty50-index)
   and update the JSON if any tickers have changed.
 
@@ -105,9 +105,9 @@ python -m services.data_fetcher
 
 | Phase | Scope | Status |
 |-------|-------|--------|
-| 1 — Foundation | Monorepo, FastAPI skeleton, yfinance cache, design tokens | ✅ Done |
-| 2 — Screening | Stock screener UI, filter logic, Supabase storage | 🔜 Next |
-| 3 — AI Chat | Groq/Gemini chat, portfolio advice, RAG | 🔜 Later |
+| 1 - Foundation | Monorepo, FastAPI skeleton, yfinance cache, design tokens | ✅ Done |
+| 2 - Screening | Stock screener UI, filter logic, Supabase storage | 🔜 Next |
+| 3 - AI Chat | Groq/Gemini chat, portfolio advice, RAG | 🔜 Later |
 
 ---
 

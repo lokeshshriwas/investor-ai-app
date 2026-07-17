@@ -1,0 +1,14 @@
+{
+  "symbol": "FEDERALBNK.NS",
+  "name": "The Federal Bank Limited",
+  "current_price": 349.0,
+  "market_cap": 860987850752,
+  "sector": "Financial Services",
+  "pe_ratio": 19.977104,
+  "peg_ratio": null,
+  "roe": 0.11731,
+  "debt_to_equity": null,
+  "profit_margin": 0.29906,
+  "revenue_growth": 0.123,
+  "_fetched_at": "2026-07-17T18:53:31.977990+00:00"
+}

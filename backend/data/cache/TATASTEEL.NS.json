@@ -1,0 +1,14 @@
+{
+  "symbol": "TATASTEEL.NS",
+  "name": "Tata Steel Limited",
+  "current_price": 185.89,
+  "market_cap": 2318391836672,
+  "sector": "Basic Materials",
+  "pe_ratio": 21.515045,
+  "peg_ratio": null,
+  "roe": 0.11156999,
+  "debt_to_equity": 89.017,
+  "profit_margin": 0.0465,
+  "revenue_growth": 0.125,
+  "_fetched_at": "2026-07-17T18:53:32.788280+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "symbol": "SBIN.NS",
+  "name": "State Bank of India",
+  "current_price": 1044.3,
+  "market_cap": 9639534002176,
+  "sector": "Financial Services",
+  "pe_ratio": 11.455683,
+  "peg_ratio": 0.53,
+  "roe": 0.15477,
+  "debt_to_equity": null,
+  "profit_margin": 0.22114,
+  "revenue_growth": 0.071,
+  "_fetched_at": "2026-07-17T18:52:59.596002+00:00"
+}

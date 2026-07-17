@@ -1,0 +1,14 @@
+{
+  "symbol": "PNB.NS",
+  "name": "Punjab National Bank",
+  "current_price": 105.77,
+  "market_cap": 1215608520704,
+  "sector": "Financial Services",
+  "pe_ratio": 6.610625,
+  "peg_ratio": null,
+  "roe": 0.12985,
+  "debt_to_equity": null,
+  "profit_margin": 0.31221,
+  "revenue_growth": 0.152,
+  "_fetched_at": "2026-07-17T18:55:32.033636+00:00"
+}

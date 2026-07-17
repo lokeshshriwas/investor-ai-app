@@ -1,65 +1,184 @@
-import Image from "next/image";
+import Link from "next/link";
+import { BarChart2, TrendingUp, MessageSquare } from "lucide-react";
 
-export default function Home() {
+const features = [
+  {
+    icon: BarChart2,
+    title: "5 Legendary Strategies",
+    desc: "Screen stocks through the lens of Buffett, Lynch, Graham, Munger, or Dalio.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Top 250 Indian Stocks",
+    desc: "Analyze over 250 top Indian companies across all market caps using real fundamental metrics.",
+  },
+  {
+    icon: MessageSquare,
+    title: "AI-Powered Insights",
+    desc: "Chat with an AI that speaks as your chosen investor - plain language, no jargon.",
+  },
+];
+
+export default function LandingPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--bg)",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Nav */}
+      <nav
+        style={{
+          background: "var(--surface)",
+          borderBottom: "1px solid var(--border)",
+          padding: "0 24px",
+          height: "56px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span style={{ fontWeight: 700, fontSize: "18px", color: "var(--text-primary)" }}>
+          Investor <span style={{ color: "var(--accent)" }}>AI</span>
+        </span>
+        <div style={{ display: "flex", gap: "12px" }}>
+          <Link
+            href="/login"
+            style={{
+              padding: "6px 16px",
+              borderRadius: "var(--radius)",
+              border: "1px solid var(--border)",
+              color: "var(--text-primary)",
+              fontSize: "14px",
+              textDecoration: "none",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Log in
+          </Link>
+          <Link
+            href="/signup"
+            style={{
+              padding: "6px 16px",
+              borderRadius: "var(--radius)",
+              background: "var(--accent)",
+              color: "var(--accent-foreground)",
+              fontSize: "14px",
+              textDecoration: "none",
+              fontWeight: 500,
+            }}
           >
-            Documentation
-          </a>
+            Sign up
+          </Link>
         </div>
-      </main>
+      </nav>
+
+      {/* Hero */}
+      <section
+        style={{
+          maxWidth: "720px",
+          margin: "0 auto",
+          padding: "80px 24px 48px",
+          textAlign: "center",
+        }}
+      >
+        <p
+          style={{
+            display: "inline-block",
+            fontSize: "12px",
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "var(--accent)",
+            border: "1px solid var(--accent)",
+            borderRadius: "99px",
+            padding: "4px 12px",
+            marginBottom: "24px",
+          }}
+        >
+          Stock · AI Advisory
+        </p>
+
+        <h1
+          style={{
+            fontSize: "clamp(32px, 5vw, 52px)",
+            fontWeight: 700,
+            lineHeight: 1.15,
+            color: "var(--text-primary)",
+            marginBottom: "20px",
+          }}
+        >
+          Pick a legend&apos;s strategy.
+          <br />
+          <span style={{ color: "var(--accent)" }}>Find your next great stock.</span>
+        </h1>
+
+        <p
+          style={{
+            fontSize: "18px",
+            color: "var(--text-secondary)",
+            lineHeight: 1.6,
+            maxWidth: "520px",
+            margin: "0 auto 40px",
+          }}
+        >
+          Choose an investing legend&apos;s style, get a screened shortlist of
+          top Indian stocks, then chat with an AI to understand exactly why each
+          one fits - or doesn&apos;t.
+        </p>
+
+        <Link
+          href="/investors"
+          style={{
+            display: "inline-block",
+            padding: "14px 36px",
+            background: "var(--accent)",
+            color: "var(--accent-foreground)",
+            borderRadius: "var(--radius)",
+            fontWeight: 600,
+            fontSize: "16px",
+            textDecoration: "none",
+          }}
+        >
+          Choose Your Investor
+        </Link>
+
+        <p style={{ marginTop: "16px", fontSize: "13px", color: "var(--text-secondary)" }}>
+          Free to explore - no credit card required
+        </p>
+      </section>
+
+      {/* Feature cards */}
+      <section
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+          padding: "0 24px 80px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          gap: "20px",
+        }}
+      >
+        {features.map((f) => (
+          <div
+            key={f.title}
+            className="surface"
+            style={{ padding: "24px" }}
+          >
+            <div style={{ marginBottom: "12px", color: "var(--accent)" }}>
+              <f.icon size={24} strokeWidth={1.5} />
+            </div>
+            <h3 style={{ fontSize: "15px", fontWeight: 600, marginBottom: "6px" }}>
+              {f.title}
+            </h3>
+            <p style={{ fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+              {f.desc}
+            </p>
+          </div>
+        ))}
+      </section>
     </div>
   );
 }

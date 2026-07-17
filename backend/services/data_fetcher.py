@@ -25,13 +25,13 @@ import yfinance as yf
 # ── Paths ────────────────────────────────────────────────────────────────────
 _BACKEND_DIR = Path(__file__).resolve().parent.parent
 _CACHE_DIR = _BACKEND_DIR / "data" / "cache"
-_NIFTY50_FILE = _BACKEND_DIR / "data" / "nifty50.json"
+_STOCK_UNIVERSE_FILE = _BACKEND_DIR / "data" / "stock_universe.json"
 
 _CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def _safe_get(info: dict, key: str) -> Any:
-    """Return info[key] or None — never raises."""
+    """Return info[key] or None - never raises."""
     try:
         val = info.get(key)
         # yfinance sometimes returns 'None' string or inf
@@ -52,13 +52,24 @@ def fetch_and_cache_stock(ticker: str) -> dict:
     """
     cache_path = _CACHE_DIR / f"{ticker}.json"
 
-    try:
-        stock = yf.Ticker(ticker)
-        info: dict = stock.info or {}
-    except Exception as exc:
-        raise RuntimeError(f"yfinance failed for {ticker}: {exc}") from exc
+    retries = 2
+    last_exc = None
+    info = {}
+    for attempt in range(retries + 1):
+        try:
+            stock = yf.Ticker(ticker)
+            info = stock.info or {}
+            if not info or ("symbol" not in info and "longName" not in info and "currentPrice" not in info and "regularMarketPrice" not in info):
+                raise ValueError("Empty or invalid info returned")
+            break
+        except Exception as exc:
+            last_exc = exc
+            if attempt < retries:
+                time.sleep(1.0)
+            else:
+                raise RuntimeError(f"yfinance failed for {ticker} after {retries} retries: {last_exc}") from last_exc
 
-    # Gracefully extract every field — None if unavailable
+    # Gracefully extract every field - None if unavailable
     data = {
         "symbol":          ticker,
         "name":            _safe_get(info, "longName") or _safe_get(info, "shortName"),
@@ -80,9 +91,9 @@ def fetch_and_cache_stock(ticker: str) -> dict:
     return data
 
 
-# == CLI runner: fetch ALL Nifty 50 tickers ===================================
+# == CLI runner: fetch ALL tickers ===================================
 if __name__ == "__main__":
-    with open(_NIFTY50_FILE, encoding="utf-8") as f:
+    with open(_STOCK_UNIVERSE_FILE, encoding="utf-8") as f:
         tickers: list[str] = json.load(f)
 
     total = len(tickers)
@@ -91,7 +102,7 @@ if __name__ == "__main__":
 
     print()
     print("-" * 55)
-    print(f"  Fetching {total} Nifty 50 tickers from Yahoo Finance")
+    print(f"  Fetching {total} tickers from Yahoo Finance")
     print("-" * 55)
     print()
 

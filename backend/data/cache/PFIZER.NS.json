@@ -1,0 +1,14 @@
+{
+  "symbol": "PFIZER.NS",
+  "name": "Pfizer Limited",
+  "current_price": 4566.9,
+  "market_cap": 208925310976,
+  "sector": "Healthcare",
+  "pe_ratio": 28.931896,
+  "peg_ratio": null,
+  "roe": 0.17159,
+  "debt_to_equity": 1.671,
+  "profit_margin": 0.28672,
+  "revenue_growth": 0.063,
+  "_fetched_at": "2026-07-17T18:58:34.943040+00:00"
+}

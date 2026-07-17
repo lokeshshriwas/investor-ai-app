@@ -1,0 +1,14 @@
+{
+  "symbol": "IOC.NS",
+  "name": "Indian Oil Corporation Limited",
+  "current_price": 141.69,
+  "market_cap": 2000838328320,
+  "sector": "Energy",
+  "pe_ratio": 4.6349363,
+  "peg_ratio": null,
+  "roe": 0.20969999,
+  "debt_to_equity": 58.446,
+  "profit_margin": 0.05367,
+  "revenue_growth": 0.067,
+  "_fetched_at": "2026-07-17T18:51:53.464186+00:00"
+}

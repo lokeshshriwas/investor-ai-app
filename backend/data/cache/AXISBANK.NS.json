@@ -1,0 +1,14 @@
+{
+  "symbol": "AXISBANK.NS",
+  "name": "Axis Bank Limited",
+  "current_price": 1328.5,
+  "market_cap": 4132919312384,
+  "sector": "Financial Services",
+  "pe_ratio": 15.727477,
+  "peg_ratio": 0.54,
+  "roe": 0.13152,
+  "debt_to_equity": null,
+  "profit_margin": 0.35393003,
+  "revenue_growth": -0.11,
+  "_fetched_at": "2026-07-17T18:53:00.665864+00:00"
+}
