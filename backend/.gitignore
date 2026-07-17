@@ -1,0 +1,33 @@
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python Cache & Compiled Files
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+secrets.json
+
+# Databases (Local Development)
+*.db
+*.sqlite3
+
+# IDE / Editor Settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
