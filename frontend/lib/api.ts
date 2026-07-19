@@ -4,7 +4,23 @@
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
-export type InvestorKey = "buffett" | "lynch" | "graham" | "munger" | "dalio";
+export type InvestorKey =
+  | "buffett"
+  | "lynch"
+  | "graham"
+  | "munger"
+  | "dalio"
+  | "fisher"
+  | "templeton"
+  | "marks"
+  | "greenblatt"
+  | "klarman"
+  | "pabrai"
+  | "cundill"
+  | "terrysmith"
+  | "jhunjhunwala"
+  | "damani";
+
 
 export interface Stock {
   symbol: string;

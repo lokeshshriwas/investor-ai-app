@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { MessageSquare } from "lucide-react";
 import { fetchStock } from "@/lib/api";
 import type { StockDetail } from "@/lib/api";
+import FloatingChatButton from "@/components/FloatingChatButton";
+
 
 function fmt(v: number | null | undefined, suffix = ""): string {
   if (v == null) return "-";
@@ -156,27 +157,6 @@ export default async function StockDetailPage({ params, searchParams }: PageProp
                 {stock.name}{stock.sector && ` · ${stock.sector}`}
               </p>
             </div>
-            {chatHref && (
-              <Link
-                href={chatHref}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "10px 20px",
-                  background: "var(--accent)",
-                  color: "var(--accent-foreground)",
-                  borderRadius: "var(--radius)",
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  textDecoration: "none",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <MessageSquare size={16} strokeWidth={2} />
-                Chat about this stock
-              </Link>
-            )}
           </div>
         </div>
       </div>
@@ -268,33 +248,16 @@ export default async function StockDetailPage({ params, searchParams }: PageProp
           </div>
         </div>
 
-        {/* No-investor CTA */}
-        {!chatHref && (
-          <div className="surface" style={{ padding: "24px", textAlign: "center" }}>
-            <p style={{ fontSize: "15px", fontWeight: 600, marginBottom: "8px" }}>
-              Want deeper analysis?
-            </p>
-            <p style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px" }}>
-              Choose an investor lens, then come back to chat about {cleanSymbol}.
-            </p>
-            <Link
-              href="/investors"
-              style={{
-                display: "inline-block",
-                padding: "10px 24px",
-                background: "var(--accent)",
-                color: "var(--accent-foreground)",
-                borderRadius: "var(--radius)",
-                fontWeight: 600,
-                fontSize: "14px",
-                textDecoration: "none",
-              }}
-            >
-              Choose an investor
-            </Link>
-          </div>
-        )}
       </div>
+
+      {/* Floating chat button — shows if an investor is in context */}
+      {chatHref && investor && (
+        <FloatingChatButton
+          investorKey={investor}
+          chatHref={chatHref}
+          hasStockContext={true}
+        />
+      )}
     </div>
   );
 }

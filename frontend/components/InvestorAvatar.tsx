@@ -12,6 +12,18 @@
  *            CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
  *  lynch   - Peter_Lynch_portrait.jpg
  *            Fair use / CC - verify license before commercial use
+ *
+ * New investors — photo status:
+ *  fisher      - INITIALS FALLBACK (PF) — no confirmed free-license photo
+ *  templeton   - INITIALS FALLBACK (JT) — historical, photo availability unconfirmed
+ *  marks       - INITIALS FALLBACK (HM) — living, press photos only
+ *  greenblatt  - INITIALS FALLBACK (JG) — no confirmed free-license photo
+ *  klarman     - INITIALS FALLBACK (SK) — notoriously private, no public photos
+ *  pabrai      - Wikimedia Commons attempted; falls back to (MP) if unavailable
+ *  cundill     - INITIALS FALLBACK (PC) — deceased 2011, historical
+ *  terrysmith  - INITIALS FALLBACK (TS) — press photos only
+ *  jhunjhunwala - Wikimedia Commons attempted; falls back to (RJ) if unavailable
+ *  damani      - INITIALS FALLBACK (RD2) — very private investor
  */
 
 "use client";
@@ -20,11 +32,21 @@ import Image from "next/image";
 import { useState } from "react";
 
 const INITIALS: Record<string, string> = {
-  buffett: "WB",
-  lynch: "PL",
-  graham: "BG",
-  munger: "CM",
-  dalio: "RD",
+  buffett:      "WB",
+  lynch:        "PL",
+  graham:       "BG",
+  munger:       "CM",
+  dalio:        "RD",
+  fisher:       "PF",
+  templeton:    "JT",
+  marks:        "HM",
+  greenblatt:   "JG",
+  klarman:      "SK",
+  pabrai:       "MP",
+  cundill:      "PC",
+  terrysmith:   "TS",
+  jhunjhunwala: "RJ",
+  damani:       "RD",
 };
 
 interface InvestorAvatarProps {
@@ -74,7 +96,7 @@ export default function InvestorAvatar({ investorKey, size = 64 }: InvestorAvata
         alt={`${initials} portrait`}
         width={size}
         height={size}
-        style={{ objectFit: "cover", objectPosition: "top center" }}
+        style={{ objectFit: "cover", objectPosition: "top center", width: size, height: size }}
         onError={() => setError(true)}
         priority={size >= 64}
       />

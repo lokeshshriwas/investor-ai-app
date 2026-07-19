@@ -11,11 +11,21 @@ import type { ChatMessage, InvestorKey } from "@/lib/api";
 import InvestorAvatar from "@/components/InvestorAvatar";
 
 const INVESTOR_NAMES: Record<string, string> = {
-  buffett: "Warren Buffett",
-  lynch: "Peter Lynch",
-  graham: "Benjamin Graham",
-  munger: "Charlie Munger",
-  dalio: "Ray Dalio",
+  buffett:      "Warren Buffett",
+  lynch:        "Peter Lynch",
+  graham:       "Benjamin Graham",
+  munger:       "Charlie Munger",
+  dalio:        "Ray Dalio",
+  fisher:       "Philip Fisher",
+  templeton:    "John Templeton",
+  marks:        "Howard Marks",
+  greenblatt:   "Joel Greenblatt",
+  klarman:      "Seth Klarman",
+  pabrai:       "Mohnish Pabrai",
+  cundill:      "Peter Cundill",
+  terrysmith:   "Terry Smith",
+  jhunjhunwala: "Rakesh Jhunjhunwala",
+  damani:       "Radhakishan Damani",
 };
 
 const STARTER_QUESTIONS: Record<string, string[]> = {
@@ -44,9 +54,63 @@ const STARTER_QUESTIONS: Record<string, string[]> = {
     "What is the All-Weather portfolio?",
     "How should I think about debt cycles?",
   ],
+  fisher: [
+    "What is scuttlebutt research and how do I do it?",
+    "How do you evaluate management quality?",
+    "Why hold a stock for decades instead of selling on good news?",
+  ],
+  templeton: [
+    "What does buying at maximum pessimism actually look like?",
+    "How do you invest when everyone else is panicking?",
+    "Why look for value outside your home country?",
+  ],
+  marks: [
+    "How should I think about investment risk?",
+    "What are market cycles and how do they affect my portfolio?",
+    "What is second-level thinking?",
+  ],
+  greenblatt: [
+    "How does the magic formula work?",
+    "What is earnings yield and why does it matter?",
+    "Why do most investors underperform the market?",
+  ],
+  klarman: [
+    "What is margin of safety and how do I calculate it?",
+    "How do you decide when a stock is cheap enough to buy?",
+    "What is the most common mistake investors make with risk?",
+  ],
+  pabrai: [
+    "What does a low-risk high-uncertainty bet look like?",
+    "How do you clone another investor's idea without just copying blindly?",
+    "How many stocks should I own in a portfolio?",
+  ],
+  cundill: [
+    "How do you value a company trading below its liquidation value?",
+    "Why look internationally for deep value?",
+    "How patient do you have to be as a value investor?",
+  ],
+  terrysmith: [
+    "What makes a company a true quality compounder?",
+    "Why is unnecessary trading so destructive to returns?",
+    "How do you identify financial engineering disguised as growth?",
+  ],
+  jhunjhunwala: [
+    "What is the India growth story and why do you believe in it?",
+    "How do you pick stocks in a market as volatile as the BSE?",
+    "Which Indian sectors do you think will lead the next decade?",
+  ],
+  damani: [
+    "What makes a retail business genuinely great in India?",
+    "How do you think about unit economics when evaluating a company?",
+    "Why is avoiding debt so important for long-term compounding?",
+  ],
 };
 
-const VALID_KEYS = new Set(["buffett", "lynch", "graham", "munger", "dalio"]);
+const VALID_KEYS = new Set([
+  "buffett", "lynch", "graham", "munger", "dalio",
+  "fisher", "templeton", "marks", "greenblatt", "klarman",
+  "pabrai", "cundill", "terrysmith", "jhunjhunwala", "damani",
+]);
 
 function MessageBubble({ msg }: { msg: ChatMessage }) {
   const isUser = msg.role === "user";

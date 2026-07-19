@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { useToast } from "@/components/ToastProvider";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,6 +21,7 @@ export default function SignupPage() {
     try {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
+      showToast("Account created! Welcome to Investor AI 🚀", "success", "🚀");
       // Supabase may require email confirmation - redirect to investors
       // and let Supabase handle the rest
       router.push("/investors");

@@ -1,11 +1,15 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BarChart2, TrendingUp, MessageSquare } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 const features = [
   {
     icon: BarChart2,
-    title: "5 Legendary Strategies",
-    desc: "Screen stocks through the lens of Buffett, Lynch, Graham, Munger, or Dalio.",
+    title: "15 Legendary Strategies",
+    desc: "Screen stocks through the lens of Buffett, Lynch, Graham, Munger, Dalio, and 10 more investing legends.",
   },
   {
     icon: TrendingUp,
@@ -20,6 +24,20 @@ const features = [
 ];
 
 export default function LandingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <div
       style={{
@@ -45,33 +63,37 @@ export default function LandingPage() {
           Investor <span style={{ color: "var(--accent)" }}>AI</span>
         </span>
         <div style={{ display: "flex", gap: "12px" }}>
-          <Link
-            href="/login"
-            style={{
-              padding: "6px 16px",
-              borderRadius: "var(--radius)",
-              border: "1px solid var(--border)",
-              color: "var(--text-primary)",
-              fontSize: "14px",
-              textDecoration: "none",
-            }}
-          >
-            Log in
-          </Link>
-          <Link
-            href="/signup"
-            style={{
-              padding: "6px 16px",
-              borderRadius: "var(--radius)",
-              background: "var(--accent)",
-              color: "var(--accent-foreground)",
-              fontSize: "14px",
-              textDecoration: "none",
-              fontWeight: 500,
-            }}
-          >
-            Sign up
-          </Link>
+          {isLoggedIn === false && (
+            <>
+              <Link
+                href="/login"
+                style={{
+                  padding: "6px 16px",
+                  borderRadius: "var(--radius)",
+                  border: "1px solid var(--border)",
+                  color: "var(--text-primary)",
+                  fontSize: "14px",
+                  textDecoration: "none",
+                }}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                style={{
+                  padding: "6px 16px",
+                  borderRadius: "var(--radius)",
+                  background: "var(--accent)",
+                  color: "var(--accent-foreground)",
+                  fontSize: "14px",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                }}
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 

@@ -46,7 +46,12 @@ def _mock_chat_reply():
 class TestScreenEndpoint:
 
     def test_all_valid_keys_return_200(self):
-        for key in ["buffett", "lynch", "graham", "munger", "dalio"]:
+        all_keys = [
+            "buffett", "lynch", "graham", "munger", "dalio",
+            "fisher", "templeton", "marks", "greenblatt", "klarman",
+            "pabrai", "cundill", "terrysmith", "jhunjhunwala", "damani",
+        ]
+        for key in all_keys:
             resp = client.get(f"/api/v1/screen/{key}")
             assert resp.status_code == 200, f"Expected 200 for key='{key}', got {resp.status_code}"
 
@@ -177,7 +182,12 @@ class TestChatEndpoint:
     @patch("routers.chat.chat_with_investor")
     def test_valid_investor_returns_200(self, mock_chat):
         mock_chat.return_value = _mock_chat_reply()
-        for key in ["buffett", "lynch", "graham", "munger", "dalio"]:
+        all_keys = [
+            "buffett", "lynch", "graham", "munger", "dalio",
+            "fisher", "templeton", "marks", "greenblatt", "klarman",
+            "pabrai", "cundill", "terrysmith", "jhunjhunwala", "damani",
+        ]
+        for key in all_keys:
             resp = client.post(
                 f"/api/v1/chat/{key}",
                 json={"conversation": self.SIMPLE_CONVERSATION},
@@ -276,7 +286,17 @@ class TestHealthAndMeta:
         assert resp.status_code == 200
         data = resp.json()
         assert "investors" in data
-        assert set(data["investors"]) == {"buffett", "lynch", "graham", "munger", "dalio"}
+        expected = {
+            "buffett", "lynch", "graham", "munger", "dalio",
+            "fisher", "templeton", "marks", "greenblatt", "klarman",
+            "pabrai", "cundill", "terrysmith", "jhunjhunwala", "damani",
+        }
+        assert set(data["investors"]) == expected
+
+    def test_investors_list_count(self):
+        resp = client.get("/api/v1/investors")
+        data = resp.json()
+        assert len(data["investors"]) == 15
 
 
 # ---------------------------------------------------------------------------

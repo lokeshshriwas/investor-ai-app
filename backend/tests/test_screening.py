@@ -1,7 +1,7 @@
 """
 tests/test_screening.py
 -----------------------
-Unit tests for each of the 5 investor scoring functions.
+Unit tests for all 15 investor scoring functions.
 
 For each scorer we verify:
   - A "great fit" stock scores higher than a "bad fit" stock
@@ -17,6 +17,16 @@ from services.screening import (
     score_lynch,
     score_munger,
     score_dalio,
+    score_fisher,
+    score_templeton,
+    score_marks,
+    score_greenblatt,
+    score_klarman,
+    score_pabrai,
+    score_cundill,
+    score_terrysmith,
+    score_jhunjhunwala,
+    score_damani,
     screen_stocks,
     VALID_INVESTOR_KEYS,
 )
@@ -124,6 +134,178 @@ BAD_DALIO = {
     "debt_to_equity": 4.0,
     "profit_margin": -0.05,  # negative margin
     "market_cap": 5e10,     # small-cap
+}
+
+# Great Fisher: high ROE, strong revenue growth, reasonable P/E, good margin
+GREAT_FISHER = {
+    "symbol": "MOCK_FISHER_GREAT",
+    "roe": 0.28,
+    "revenue_growth": 0.25,
+    "pe_ratio": 15.0,
+    "profit_margin": 0.20,
+}
+
+BAD_FISHER = {
+    "symbol": "MOCK_FISHER_BAD",
+    "roe": 0.05,
+    "revenue_growth": 0.02,
+    "pe_ratio": 60.0,
+    "profit_margin": 0.03,
+}
+
+# Great Templeton: very low P/E, low D/E, decent margin
+GREAT_TEMPLETON = {
+    "symbol": "MOCK_TEMPLETON_GREAT",
+    "pe_ratio": 4.0,
+    "debt_to_equity": 0.2,
+    "profit_margin": 0.15,
+    "roe": 0.18,
+}
+
+BAD_TEMPLETON = {
+    "symbol": "MOCK_TEMPLETON_BAD",
+    "pe_ratio": 45.0,
+    "debt_to_equity": 3.0,
+    "profit_margin": 0.01,
+    "roe": 0.04,
+}
+
+# Great Marks: low D/E, stable margin, mega-cap, moderate P/E
+GREAT_MARKS = {
+    "symbol": "MOCK_MARKS_GREAT",
+    "debt_to_equity": 0.1,
+    "profit_margin": 0.18,
+    "market_cap": 6e12,
+    "pe_ratio": 12.0,
+}
+
+BAD_MARKS = {
+    "symbol": "MOCK_MARKS_BAD",
+    "debt_to_equity": 4.0,
+    "profit_margin": 0.01,
+    "market_cap": 5e10,
+    "pe_ratio": 60.0,
+}
+
+# Great Greenblatt: very low P/E (high earnings yield) + high ROE
+GREAT_GREENBLATT = {
+    "symbol": "MOCK_GREEN_GREAT",
+    "pe_ratio": 5.0,
+    "roe": 0.35,
+    "profit_margin": 0.18,
+}
+
+BAD_GREENBLATT = {
+    "symbol": "MOCK_GREEN_BAD",
+    "pe_ratio": 50.0,
+    "roe": 0.04,
+    "profit_margin": 0.02,
+}
+
+# Great Klarman: very low P/E, very low D/E, good margin, decent ROE
+GREAT_KLARMAN = {
+    "symbol": "MOCK_KLARMAN_GREAT",
+    "pe_ratio": 4.0,
+    "debt_to_equity": 0.1,
+    "profit_margin": 0.20,
+    "roe": 0.22,
+}
+
+BAD_KLARMAN = {
+    "symbol": "MOCK_KLARMAN_BAD",
+    "pe_ratio": 55.0,
+    "debt_to_equity": 4.0,
+    "profit_margin": 0.01,
+    "roe": 0.03,
+}
+
+# Great Pabrai: low P/E, very low D/E, decent ROE, positive margin
+GREAT_PABRAI = {
+    "symbol": "MOCK_PABRAI_GREAT",
+    "pe_ratio": 5.0,
+    "debt_to_equity": 0.1,
+    "roe": 0.22,
+    "profit_margin": 0.17,
+}
+
+BAD_PABRAI = {
+    "symbol": "MOCK_PABRAI_BAD",
+    "pe_ratio": 70.0,
+    "debt_to_equity": 5.0,
+    "roe": 0.02,
+    "profit_margin": 0.01,
+}
+
+# Great Cundill: very low P/E, low D/E, positive margin, small-cap
+GREAT_CUNDILL = {
+    "symbol": "MOCK_CUNDILL_GREAT",
+    "pe_ratio": 3.0,
+    "debt_to_equity": 0.15,
+    "profit_margin": 0.12,
+    "market_cap": 1e11,  # small-cap
+}
+
+BAD_CUNDILL = {
+    "symbol": "MOCK_CUNDILL_BAD",
+    "pe_ratio": 60.0,
+    "debt_to_equity": 4.0,
+    "profit_margin": -0.05,
+    "market_cap": 1e13,
+}
+
+# Great TerrySmith: very high ROE, high margin, low D/E, reasonable P/E
+GREAT_TERRYSMITH = {
+    "symbol": "MOCK_TERRY_GREAT",
+    "roe": 0.40,
+    "profit_margin": 0.28,
+    "debt_to_equity": 0.2,
+    "pe_ratio": 18.0,
+}
+
+BAD_TERRYSMITH = {
+    "symbol": "MOCK_TERRY_BAD",
+    "roe": 0.05,
+    "profit_margin": 0.03,
+    "debt_to_equity": 5.0,
+    "pe_ratio": 80.0,
+}
+
+# Great Jhunjhunwala: strong growth, high ROE, reasonable PEG, large Indian cap
+GREAT_JHUNJHUNWALA = {
+    "symbol": "MOCK_JJ_GREAT",
+    "revenue_growth": 0.30,
+    "roe": 0.28,
+    "peg_ratio": 0.8,
+    "market_cap": 8e11,
+    "profit_margin": 0.18,
+}
+
+BAD_JHUNJHUNWALA = {
+    "symbol": "MOCK_JJ_BAD",
+    "revenue_growth": 0.01,
+    "roe": 0.04,
+    "peg_ratio": 8.0,
+    "market_cap": 1e10,
+    "profit_margin": 0.02,
+}
+
+# Great Damani: low P/E, strong margin, low D/E, large-cap
+GREAT_DAMANI = {
+    "symbol": "MOCK_DAMANI_GREAT",
+    "pe_ratio": 6.0,
+    "profit_margin": 0.20,
+    "debt_to_equity": 0.1,
+    "market_cap": 3e12,
+    "roe": 0.22,
+}
+
+BAD_DAMANI = {
+    "symbol": "MOCK_DAMANI_BAD",
+    "pe_ratio": 70.0,
+    "profit_margin": 0.01,
+    "debt_to_equity": 6.0,
+    "market_cap": 2e10,
+    "roe": 0.02,
 }
 
 
@@ -284,6 +466,292 @@ class TestScoreDalio:
 
 
 # ---------------------------------------------------------------------------
+# Fisher scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreFisher:
+    def test_great_beats_bad(self):
+        assert score_fisher(GREAT_FISHER) > score_fisher(BAD_FISHER)
+
+    def test_higher_roe_higher_score(self):
+        high = {**GREAT_FISHER, "roe": 0.35}
+        low  = {**GREAT_FISHER, "roe": 0.08}
+        assert score_fisher(high) > score_fisher(low)
+
+    def test_higher_growth_higher_score(self):
+        high = {**GREAT_FISHER, "revenue_growth": 0.30}
+        low  = {**GREAT_FISHER, "revenue_growth": 0.02}
+        assert score_fisher(high) > score_fisher(low)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_FISHER, "pe_ratio": 10.0}
+        high_pe = {**GREAT_FISHER, "pe_ratio": 50.0}
+        assert score_fisher(low_pe) > score_fisher(high_pe)
+
+    def test_empty_stock_returns_none(self):
+        assert score_fisher(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_fisher(PARTIAL_STOCK)
+        assert result is not None
+
+    def test_score_in_range(self):
+        result = score_fisher(GREAT_FISHER)
+        assert result is not None
+        assert 0 <= result <= 100
+
+
+# ---------------------------------------------------------------------------
+# Templeton scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreTempleton:
+    def test_great_beats_bad(self):
+        assert score_templeton(GREAT_TEMPLETON) > score_templeton(BAD_TEMPLETON)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_TEMPLETON, "pe_ratio": 3.0}
+        high_pe = {**GREAT_TEMPLETON, "pe_ratio": 18.0}
+        assert score_templeton(low_pe) > score_templeton(high_pe)
+
+    def test_lower_de_higher_score(self):
+        low_de  = {**GREAT_TEMPLETON, "debt_to_equity": 0.1}
+        high_de = {**GREAT_TEMPLETON, "debt_to_equity": 2.0}
+        assert score_templeton(low_de) > score_templeton(high_de)
+
+    def test_empty_stock_returns_none(self):
+        assert score_templeton(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_templeton(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Marks scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreMarks:
+    def test_great_beats_bad(self):
+        assert score_marks(GREAT_MARKS) > score_marks(BAD_MARKS)
+
+    def test_lower_de_higher_score(self):
+        low_de  = {**GREAT_MARKS, "debt_to_equity": 0.1}
+        high_de = {**GREAT_MARKS, "debt_to_equity": 3.0}
+        assert score_marks(low_de) > score_marks(high_de)
+
+    def test_large_cap_beats_small_cap(self):
+        large = {**GREAT_MARKS, "market_cap": 5e12}
+        small = {**GREAT_MARKS, "market_cap": 1e10}
+        assert score_marks(large) > score_marks(small)
+
+    def test_empty_stock_returns_none(self):
+        assert score_marks(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_marks(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Greenblatt scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreGreenblatt:
+    def test_great_beats_bad(self):
+        assert score_greenblatt(GREAT_GREENBLATT) > score_greenblatt(BAD_GREENBLATT)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_GREENBLATT, "pe_ratio": 5.0}
+        high_pe = {**GREAT_GREENBLATT, "pe_ratio": 30.0}
+        assert score_greenblatt(low_pe) > score_greenblatt(high_pe)
+
+    def test_higher_roe_higher_score(self):
+        high = {**GREAT_GREENBLATT, "roe": 0.40}
+        low  = {**GREAT_GREENBLATT, "roe": 0.05}
+        assert score_greenblatt(high) > score_greenblatt(low)
+
+    def test_empty_stock_returns_none(self):
+        assert score_greenblatt(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_greenblatt(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Klarman scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreKlarman:
+    def test_great_beats_bad(self):
+        assert score_klarman(GREAT_KLARMAN) > score_klarman(BAD_KLARMAN)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_KLARMAN, "pe_ratio": 3.0}
+        high_pe = {**GREAT_KLARMAN, "pe_ratio": 18.0}
+        assert score_klarman(low_pe) > score_klarman(high_pe)
+
+    def test_lower_de_higher_score(self):
+        low_de  = {**GREAT_KLARMAN, "debt_to_equity": 0.05}
+        high_de = {**GREAT_KLARMAN, "debt_to_equity": 0.8}
+        assert score_klarman(low_de) > score_klarman(high_de)
+
+    def test_empty_stock_returns_none(self):
+        assert score_klarman(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_klarman(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Pabrai scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScorePabrai:
+    def test_great_beats_bad(self):
+        assert score_pabrai(GREAT_PABRAI) > score_pabrai(BAD_PABRAI)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_PABRAI, "pe_ratio": 4.0}
+        high_pe = {**GREAT_PABRAI, "pe_ratio": 20.0}
+        assert score_pabrai(low_pe) > score_pabrai(high_pe)
+
+    def test_lower_de_higher_score(self):
+        low_de  = {**GREAT_PABRAI, "debt_to_equity": 0.05}
+        high_de = {**GREAT_PABRAI, "debt_to_equity": 1.0}
+        assert score_pabrai(low_de) > score_pabrai(high_de)
+
+    def test_empty_stock_returns_none(self):
+        assert score_pabrai(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_pabrai(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Cundill scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreCundill:
+    def test_great_beats_bad(self):
+        assert score_cundill(GREAT_CUNDILL) > score_cundill(BAD_CUNDILL)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_CUNDILL, "pe_ratio": 2.0}
+        high_pe = {**GREAT_CUNDILL, "pe_ratio": 14.0}
+        assert score_cundill(low_pe) > score_cundill(high_pe)
+
+    def test_small_cap_beats_mega_cap(self):
+        small = {**GREAT_CUNDILL, "market_cap": 5e10}
+        mega  = {**GREAT_CUNDILL, "market_cap": 1e13}
+        assert score_cundill(small) > score_cundill(mega)
+
+    def test_empty_stock_returns_none(self):
+        assert score_cundill(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_cundill(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# TerrySmith scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreTerrySmith:
+    def test_great_beats_bad(self):
+        assert score_terrysmith(GREAT_TERRYSMITH) > score_terrysmith(BAD_TERRYSMITH)
+
+    def test_higher_roe_higher_score(self):
+        high = {**GREAT_TERRYSMITH, "roe": 0.45}
+        low  = {**GREAT_TERRYSMITH, "roe": 0.08}
+        assert score_terrysmith(high) > score_terrysmith(low)
+
+    def test_higher_margin_higher_score(self):
+        high = {**GREAT_TERRYSMITH, "profit_margin": 0.35}
+        low  = {**GREAT_TERRYSMITH, "profit_margin": 0.05}
+        assert score_terrysmith(high) > score_terrysmith(low)
+
+    def test_empty_stock_returns_none(self):
+        assert score_terrysmith(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_terrysmith(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Jhunjhunwala scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreJhunjhunwala:
+    def test_great_beats_bad(self):
+        assert score_jhunjhunwala(GREAT_JHUNJHUNWALA) > score_jhunjhunwala(BAD_JHUNJHUNWALA)
+
+    def test_higher_growth_higher_score(self):
+        high = {**GREAT_JHUNJHUNWALA, "revenue_growth": 0.40}
+        low  = {**GREAT_JHUNJHUNWALA, "revenue_growth": 0.02}
+        assert score_jhunjhunwala(high) > score_jhunjhunwala(low)
+
+    def test_higher_roe_higher_score(self):
+        high = {**GREAT_JHUNJHUNWALA, "roe": 0.35}
+        low  = {**GREAT_JHUNJHUNWALA, "roe": 0.05}
+        assert score_jhunjhunwala(high) > score_jhunjhunwala(low)
+
+    def test_large_cap_beats_micro_cap(self):
+        large = {**GREAT_JHUNJHUNWALA, "market_cap": 8e11}
+        micro = {**GREAT_JHUNJHUNWALA, "market_cap": 1e9}
+        assert score_jhunjhunwala(large) > score_jhunjhunwala(micro)
+
+    def test_empty_stock_returns_none(self):
+        assert score_jhunjhunwala(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        partial = {"symbol": "MOCK", "revenue_growth": 0.20, "roe": 0.20}
+        result = score_jhunjhunwala(partial)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
+# Damani scorer tests
+# ---------------------------------------------------------------------------
+
+class TestScoreDamani:
+    def test_great_beats_bad(self):
+        assert score_damani(GREAT_DAMANI) > score_damani(BAD_DAMANI)
+
+    def test_lower_pe_higher_score(self):
+        low_pe  = {**GREAT_DAMANI, "pe_ratio": 5.0}
+        high_pe = {**GREAT_DAMANI, "pe_ratio": 25.0}
+        assert score_damani(low_pe) > score_damani(high_pe)
+
+    def test_higher_margin_higher_score(self):
+        high = {**GREAT_DAMANI, "profit_margin": 0.25}
+        low  = {**GREAT_DAMANI, "profit_margin": 0.03}
+        assert score_damani(high) > score_damani(low)
+
+    def test_lower_de_higher_score(self):
+        low_de  = {**GREAT_DAMANI, "debt_to_equity": 0.05}
+        high_de = {**GREAT_DAMANI, "debt_to_equity": 1.0}
+        assert score_damani(low_de) > score_damani(high_de)
+
+    def test_large_cap_beats_small_cap(self):
+        large = {**GREAT_DAMANI, "market_cap": 5e12}
+        small = {**GREAT_DAMANI, "market_cap": 5e9}
+        assert score_damani(large) > score_damani(small)
+
+    def test_empty_stock_returns_none(self):
+        assert score_damani(EMPTY_STOCK) is None
+
+    def test_partial_stock_returns_score(self):
+        result = score_damani(PARTIAL_STOCK)
+        assert result is not None
+
+
+# ---------------------------------------------------------------------------
 # screen_stocks() function tests
 # ---------------------------------------------------------------------------
 
@@ -333,6 +801,7 @@ class TestScreenStocks:
             assert isinstance(s["score"], float)
 
     def test_all_valid_investor_keys_work(self):
+        """All 15 investor keys must work without error."""
         for key in VALID_INVESTOR_KEYS:
             result = screen_stocks(key, self.STOCKS)
             assert isinstance(result, list)
@@ -360,3 +829,15 @@ class TestScreenStocks:
         stock_pct  = {**GREAT_BUFFETT, "roe": 28.0}
         # Both should give the same score (both normalise to 28%)
         assert abs(score_buffett(stock_frac) - score_buffett(stock_pct)) < 0.1
+
+    def test_valid_investor_keys_count(self):
+        """Should have exactly 15 investor keys."""
+        assert len(VALID_INVESTOR_KEYS) == 15
+
+    def test_all_new_investor_keys_present(self):
+        """Verify each of the 10 new investor keys is registered."""
+        new_keys = {
+            "fisher", "templeton", "marks", "greenblatt", "klarman",
+            "pabrai", "cundill", "terrysmith", "jhunjhunwala", "damani",
+        }
+        assert new_keys.issubset(set(VALID_INVESTOR_KEYS))
