@@ -24,7 +24,7 @@ app = FastAPI(
 # Phase 5 will update this to the production frontend URL.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "https://investorai.bylokesh.in/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
