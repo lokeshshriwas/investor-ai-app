@@ -6,7 +6,7 @@ import ToastProvider from "@/components/ToastProvider";
 import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
-  title: "Investor AI - Nifty 50 Advisory",
+  title: "Investor AI",
   description:
     "AI-powered investment advisory for Indian equities. Screen Nifty 50 stocks by fundamentals and get AI-driven insights.",
 };
