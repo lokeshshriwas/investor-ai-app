@@ -7,6 +7,8 @@ groq>=0.9.0
 google-generativeai>=0.7.0
 supabase>=2.4.0
 pandas>=2.2.0
+slowapi>=0.1.9
+
 
 # Development / test dependencies (install with: pip install -r requirements-dev.txt)
 # See requirements-dev.txt

@@ -6,12 +6,15 @@ Body: {"conversation": [...], "stock_context": "optional string"}
 Response: {"reply": "..."}
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 from services.llm import chat_with_investor
 from prompts.investor_prompts import VALID_INVESTOR_KEYS
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
+limiter = Limiter(key_func=get_remote_address)
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
 
@@ -21,7 +24,9 @@ class ChatRequest(BaseModel):
 
 
 @router.post("/{investor_key}")
-def chat(investor_key: str, body: ChatRequest):
+@limiter.limit("15/minute")
+def chat(request: Request, investor_key: str, body: ChatRequest):
+
     """
     Send a conversation to the requested investor persona and receive a reply.
 

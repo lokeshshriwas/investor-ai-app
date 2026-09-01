@@ -1,4 +1,4 @@
-﻿# Production requirements — optimised for 1 GB RAM (Oracle Free Tier VM)
+# Production requirements — optimised for 1 GB RAM (Oracle Free Tier VM)
 # Key differences from requirements.txt (dev):
 #   - Removed: supabase (heavy client, ~150 MB of transitive deps)
 #   - Added:   httpx (direct Supabase REST calls — same feature, 10x lighter)
@@ -13,3 +13,5 @@ groq>=0.9.0
 httpx>=0.27.0
 pandas>=2.2.0
 yfinance>=0.2.40
+slowapi>=0.1.9
+
