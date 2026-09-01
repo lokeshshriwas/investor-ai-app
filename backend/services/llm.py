@@ -31,7 +31,6 @@ _client: Optional[Groq] = None
 _model_resolved: bool = False
 
 # Chat-completion models only (ordered by preference)
-# Audio/speech models like whisper-* are intentionally excluded
 _PREFERRED_MODELS = [
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
@@ -39,10 +38,12 @@ _PREFERRED_MODELS = [
     "llama3-8b-8192",
     "mixtral-8x7b-32768",
     "gemma2-9b-it",
+    "gemma-7b-it",
 ]
 
-# Keywords that identify non-chat models to exclude from selection
-_NON_CHAT_PREFIXES = ("whisper", "distil-whisper", "playai", "tts")
+# Prefixes of model IDs that are KNOWN to support chat completions.
+# Used as an allowlist when none of the preferred models are available.
+_CHAT_MODEL_PREFIXES = ("llama", "mixtral", "gemma", "qwen", "deepseek", "mistral")
 
 _ACTIVE_MODEL: str = "llama3-8b-8192"
 
@@ -68,10 +69,10 @@ def _resolve_model() -> str:
                 _ACTIVE_MODEL = model
                 _model_resolved = True
                 return model
-        # If no preferred model matched, pick first available chat-compatible model
+        # None of the preferred models matched — pick first KNOWN chat model
         chat_models = [
             m for m in available
-            if not any(m.startswith(prefix) for prefix in _NON_CHAT_PREFIXES)
+            if any(m.lower().startswith(prefix) for prefix in _CHAT_MODEL_PREFIXES)
         ]
         if chat_models:
             _ACTIVE_MODEL = chat_models[0]
