@@ -22,20 +22,28 @@ else
 fi
 
 echo "=== [3/5] App Directory Validation ==="
-if [ ! -d ~/investor-ai ]; then
-    echo "ERROR: Code not found at ~/investor-ai"
+# Find project directory (handles ~/investor-ai, ~/investor-ai-app, or current dir)
+if [ -d "$HOME/investor-ai-app" ]; then
+    APP_DIR="$HOME/investor-ai-app"
+elif [ -d "$HOME/investor-ai" ]; then
+    APP_DIR="$HOME/investor-ai"
+elif [ -d "$(pwd)/backend" ]; then
+    APP_DIR="$(pwd)"
+else
+    echo "ERROR: Code not found at ~/investor-ai or ~/investor-ai-app"
     echo "Please clone or upload your code first."
     exit 1
 fi
+echo "Using project directory: $APP_DIR"
 
 echo "=== [4/5] Backend Setup (FastAPI) ==="
-cd ~/investor-ai/backend
+cd "$APP_DIR/backend"
 python3 -m venv venv
 source venv/bin/activate
 pip install --no-cache-dir -r requirements-prod.txt
 
 # Create Backend Systemd Service
-cat << 'EOF' | sudo tee /etc/systemd/system/investor-ai-backend.service
+cat << EOF | sudo tee /etc/systemd/system/investor-ai-backend.service
 [Unit]
 Description=Investor AI FastAPI Backend
 After=network.target
@@ -43,9 +51,9 @@ After=network.target
 [Service]
 Type=simple
 User=ubuntu
-WorkingDirectory=/home/ubuntu/investor-ai/backend
-Environment="PATH=/home/ubuntu/investor-ai/backend/venv/bin"
-ExecStart=/home/ubuntu/investor-ai/backend/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
+WorkingDirectory=$APP_DIR/backend
+Environment="PATH=$APP_DIR/backend/venv/bin"
+ExecStart=$APP_DIR/backend/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=always
 RestartSec=5
 
