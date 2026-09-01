@@ -30,7 +30,8 @@ load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 _client: Optional[Groq] = None
 _model_resolved: bool = False
 
-# Active models on Groq in priority order
+# Chat-completion models only (ordered by preference)
+# Audio/speech models like whisper-* are intentionally excluded
 _PREFERRED_MODELS = [
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
@@ -39,6 +40,9 @@ _PREFERRED_MODELS = [
     "mixtral-8x7b-32768",
     "gemma2-9b-it",
 ]
+
+# Keywords that identify non-chat models to exclude from selection
+_NON_CHAT_PREFIXES = ("whisper", "distil-whisper", "playai", "tts")
 
 _ACTIVE_MODEL: str = "llama3-8b-8192"
 
@@ -64,10 +68,13 @@ def _resolve_model() -> str:
                 _ACTIVE_MODEL = model
                 _model_resolved = True
                 return model
-        # If we reach here, we have the available list but no preferred model matched.
-        # Fallback to the first available model.
-        if available:
-            _ACTIVE_MODEL = list(available)[0]
+        # If no preferred model matched, pick first available chat-compatible model
+        chat_models = [
+            m for m in available
+            if not any(m.startswith(prefix) for prefix in _NON_CHAT_PREFIXES)
+        ]
+        if chat_models:
+            _ACTIVE_MODEL = chat_models[0]
             _model_resolved = True
             return _ACTIVE_MODEL
     except Exception:
