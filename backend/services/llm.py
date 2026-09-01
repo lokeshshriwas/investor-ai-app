@@ -41,9 +41,10 @@ _PREFERRED_MODELS = [
     "gemma-7b-it",
 ]
 
-# Prefixes of model IDs that are KNOWN to support chat completions.
-# Used as an allowlist when none of the preferred models are available.
-_CHAT_MODEL_PREFIXES = ("llama", "mixtral", "gemma", "qwen", "deepseek", "mistral")
+# Prefixes of model IDs that are KNOWN to support standard chat completions.
+# Reasoning/thinking models (deepseek-r1, qwen-qwq, etc.) are excluded because
+# they emit <think>...</think> blocks which break our response format.
+_CHAT_MODEL_PREFIXES = ("llama", "mixtral", "gemma", "mistral")
 
 _ACTIVE_MODEL: str = "llama3-8b-8192"
 
@@ -85,6 +86,12 @@ def _resolve_model() -> str:
     return _ACTIVE_MODEL
 
 
+def _strip_thinking(text: str) -> str:
+    """Remove <think>...</think> reasoning blocks emitted by some models."""
+    text = re.sub(r"<think>[\s\S]*?</think>", "", text, flags=re.IGNORECASE)
+    return text.strip()
+
+
 # -- Public: chat_with_investor -----------------------------------------------
 
 def chat_with_investor(
@@ -122,7 +129,7 @@ def chat_with_investor(
         max_tokens=300,
         temperature=0.5,
     )
-    return response.choices[0].message.content or ""
+    return _strip_thinking(response.choices[0].message.content or "")
 
 
 # -- Public: generate_pros_cons -----------------------------------------------
