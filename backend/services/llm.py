@@ -31,14 +31,14 @@ _client: Optional[Groq] = None
 _model_resolved: bool = False
 
 # Chat-completion models only (ordered by preference)
+# Decommissioned models removed: llama3-8b-8192, llama3-70b-8192
 _PREFERRED_MODELS = [
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
-    "llama3-70b-8192",
-    "llama3-8b-8192",
     "mixtral-8x7b-32768",
     "gemma2-9b-it",
     "gemma-7b-it",
+    "llama-3.1-70b-versatile",
 ]
 
 # Prefixes of model IDs that are KNOWN to support standard chat completions.
@@ -46,7 +46,7 @@ _PREFERRED_MODELS = [
 # they emit <think>...</think> blocks which break our response format.
 _CHAT_MODEL_PREFIXES = ("llama", "mixtral", "gemma", "mistral")
 
-_ACTIVE_MODEL: str = "llama3-8b-8192"
+_ACTIVE_MODEL: str = "gemma2-9b-it"  # stable fallback on all Groq tiers
 
 
 def _get_client() -> Groq:
