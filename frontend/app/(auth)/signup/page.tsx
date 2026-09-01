@@ -22,8 +22,7 @@ export default function SignupPage() {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
       showToast("Account created! Welcome to Investor AI 🚀", "success", "🚀");
-      // Supabase may require email confirmation - redirect to investors
-      // and let Supabase handle the rest
+      // Once signed up, the user is logged in automatically (if email confirmation is disabled)
       router.push("/investors");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Sign up failed. Please try again.");
