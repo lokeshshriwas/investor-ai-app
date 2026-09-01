@@ -40,7 +40,7 @@ _PREFERRED_MODELS = [
     "gemma2-9b-it",
 ]
 
-_ACTIVE_MODEL: str = "llama-3.1-8b-instant"
+_ACTIVE_MODEL: str = "llama3-8b-8192"
 
 
 def _get_client() -> Groq:
@@ -64,9 +64,15 @@ def _resolve_model() -> str:
                 _ACTIVE_MODEL = model
                 _model_resolved = True
                 return model
+        # If we reach here, we have the available list but no preferred model matched.
+        # Fallback to the first available model.
+        if available:
+            _ACTIVE_MODEL = list(available)[0]
+            _model_resolved = True
+            return _ACTIVE_MODEL
     except Exception:
         pass
-    _ACTIVE_MODEL = "llama-3.1-8b-instant"
+    _ACTIVE_MODEL = "llama3-8b-8192"
     _model_resolved = True
     return _ACTIVE_MODEL
 
