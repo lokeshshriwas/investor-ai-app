@@ -31,7 +31,6 @@ _client: Optional[Groq] = None
 _model_resolved: bool = False
 
 # Chat-completion models only (ordered by preference)
-# Decommissioned models removed: llama3-8b-8192, llama3-70b-8192
 _PREFERRED_MODELS = [
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
@@ -39,12 +38,15 @@ _PREFERRED_MODELS = [
     "gemma2-9b-it",
     "gemma-7b-it",
     "llama-3.1-70b-versatile",
+    "openai/gpt-oss-120b",   # available on some Groq tiers
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-27b",
+    "qwen/qwen3.6-27b",
+    "groq/compound",
 ]
 
-# Prefixes of model IDs that are KNOWN to support standard chat completions.
-# Reasoning/thinking models (deepseek-r1, qwen-qwq, etc.) are excluded because
-# they emit <think>...</think> blocks which break our response format.
-_CHAT_MODEL_PREFIXES = ("llama", "mixtral", "gemma", "mistral")
+# Prefixes of model IDs that are KNOWN to support chat completions.
+_CHAT_MODEL_PREFIXES = ("llama", "mixtral", "gemma", "mistral", "openai/gpt-oss", "qwen/qwen3", "groq/compound")
 
 _ACTIVE_MODEL: str = "gemma2-9b-it"  # stable fallback on all Groq tiers
 
